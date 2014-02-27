@@ -7,7 +7,8 @@ app.secret_key = "shhhhthisisasecret"
 @app.route("/")
 def index():
     if session.get("username"):
-        return render_template("loggedin.html", username=session['username'])
+        return redirect(url_for("view_user", username=session['username']))
+        #render_template("loggedin.html", username=session['username'])
         #"User %s is logged in!" % session['username']
     else:
         return render_template("index.html")
@@ -41,8 +42,11 @@ def register():
     return render_template("register.html")
 
 @app.route("/user/<username>")
-def view_user():
-    pass
+def view_user(username):
+    model.connect_to_db()
+    user_id = model.get_user_by_name(username)
+    wall_posts = model.get_wallposts_by_userid(user_id)
+    return render_template("wall.html", wall_posts=wall_posts, username=username)
 
 
 if __name__ == "__main__":
