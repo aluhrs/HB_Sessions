@@ -48,6 +48,9 @@ def view_user(username):
     wall_posts = model.get_wallposts_by_userid(user_id)
     return render_template("wall.html", wall_posts=wall_posts, username=username)
 
+@app.route("/user/<username>")
+def post_to_wall():
+    pass
 
 if __name__ == "__main__":
     app.run(debug = True)

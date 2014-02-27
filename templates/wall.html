@@ -2,10 +2,18 @@
 
 {% block body %}
 <p>This is {{username}}'s wall</p>
-{% for each in wall_posts %}
-    <!-- each[0] is the owner_id, each[1] is the author_id, each[2] is the created_at, each[3] is the content -->
-    <div>
-        <p>{{each[1]}} wrote at {{each[2]}}: {{each[3]}}</p>
-    </div>
-{% endfor %}
+
+    {% for each in wall_posts %}
+        <!-- each[0] is the owner_id, each[1] is the author_id, each[2] is the created_at, each[3] is the content -->
+        <div>
+            <p>{{each[1]}} wrote at {{each[2]}}: {{each[3]}}</p>
+        </div>
+    {% endfor %}
+
+    {% if {{username}} != None %}
+        <form class="signin" action="" method="POST">
+            <input type="text" class="form-control" placeholder="Post" name="Post">
+            <input type="submit" class="btn btn-lg btn-primary btn-block" value="Submit">
+        </form>
+    {% endif %}
 {% endblock %}
