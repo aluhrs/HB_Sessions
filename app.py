@@ -16,13 +16,13 @@ def index():
 def process_login():
     username = request.form.get("username")
     password = request.form.get("password")
+    model.connect_to_db()
+    user_id = model.authenticate(username, password)
 
-    username = model.authenticate(username, password)
-
-    if username != None:
+    if user_id != None:
         flash("User authenticated")
+        session['user_id'] = user_id
         session['username'] = username
-        print session['username']
     else:
         flash("Password incorrect, there may be a ferret stampede in progress!")
 
@@ -39,6 +39,11 @@ def end_session():
 @app.route("/register")
 def register():
     return render_template("register.html")
+
+@app.route("/user/<username>")
+def view_user():
+    pass
+
 
 if __name__ == "__main__":
     app.run(debug = True)
